@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Dashboard Admin – Passageiro 5 Estrelas</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="./theme/theme.css">
+
+<style>
+body{
+  background:linear-gradient(180deg,#ffffff,#f3f3f3);
+  font-family:Inter, Arial, sans-serif;
+}
+.page{
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+}
+.box{
+  width:100%;
+  max-width:420px;
+  background:#fff;
+  border-radius:26px;
+  padding:30px 24px;
+  box-shadow:0 14px 36px rgba(0,0,0,.12);
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+}
+h1{
+  text-align:center;
+  font-size:1.6rem;
+}
+button{
+  padding:16px;
+  border-radius:18px;
+  border:none;
+  font-weight:800;
+  cursor:pointer;
+}
+.primary{
+  background:#111;
+  color:#fff;
+}
+.gold{
+  background:#d4af37;
+}
+.outline{
+  background:#fff;
+  border:1px solid #ccc;
+}
+.footer{
+  text-align:center;
+  font-size:.75rem;
+  color:#777;
+}
+</style>
+</head>
+
+<body>
+
+<div class="page">
+  <div class="box">
+
+    <h1>ADMINISTRADOR 5 ESTRELAS</h1>
+    <p id="nome"></p>
+
+    <button class="primary" onclick="abrirPainel()">
+      🛠️ Painel Administrativo
+    </button>
+
+    <button class="gold" onclick="iniciarCalculo()">
+      ▶ Iniciar cálculo
+    </button>
+
+    <button class="outline" onclick="regrasMotorista()">
+      📋 Regras do motorista
+    </button>
+
+    <button class="outline" onclick="regrasPassageiro()">
+      📋 Regras do passageiro
+    </button>
+
+    <a class="outline btn" href="instalar-app.html">
+      📲 Instalar App
+    </a>
+
+    <button class="outline" onclick="sair()">
+      🔒 Sair
+    </button>
+
+    <div class="footer">
+      5 ESTRELAS • Controle administrativo
+    </div>
+
+  </div>
+</div>
+
+<script>
+const usuario = JSON.parse(localStorage.getItem("usuarioRF"));
+
+if(!usuario || usuario.tipo !== "admin"){
+  localStorage.clear();
+  window.location.href = "index.html";
+}
+
+document.getElementById("nome").innerText = usuario.nome;
+
+function abrirPainel(){
+  window.location.href = "admin-painel.html";
+}
+function iniciarCalculo(){
+  window.location.href = "origem.html";
+}
+function regrasMotorista(){
+  window.location.href = "regras-motorista.html";
+}
+function regrasPassageiro(){
+  window.location.href = "regras-passageiro.html";
+}
+function sair(){
+  localStorage.clear();
+  window.location.href = "index.html";
+}
+</script>
+
+</body>
+</html>
