@@ -8,7 +8,6 @@
 <link rel="stylesheet" href="./theme/theme.css">
 
 <style>
-/* ===== PALETA 5 ESTRELAS ===== */
 :root{
   --wine-dark:#2B0F14;
   --wine:#4A1A22;
@@ -18,16 +17,10 @@
   --text:#333;
 }
 
-/* ===== LAYOUT ===== */
 body{
+  margin:0;
   min-height:100vh;
-  background:
-    linear-gradient(
-      180deg,
-      #ffffff 0%,
-      #f4f1f2 60%,
-      #efe9ec 100%
-    );
+  background:linear-gradient(180deg,#ffffff 0%,#f4f1f2 60%,#efe9ec 100%);
   font-family:Inter, Arial, sans-serif;
   color:var(--text);
 }
@@ -45,26 +38,21 @@ body{
   max-width:420px;
   display:flex;
   flex-direction:column;
-  gap:20px;
+  gap:18px;
 }
 
-/* ===== HERO ===== */
+/* HERO */
 .hero{
   text-align:center;
   padding:34px 24px;
   border-radius:26px;
-  background:
-    linear-gradient(
-      135deg,
-      var(--wine-dark),
-      var(--wine)
-    );
+  background:linear-gradient(135deg,var(--wine-dark),var(--wine));
   box-shadow:0 14px 36px rgba(0,0,0,.18);
   color:#fff;
 }
 
 .hero h1{
-  font-size:1.7rem;
+  font-size:1.6rem;
   font-weight:900;
   letter-spacing:2px;
 }
@@ -76,14 +64,17 @@ body{
   opacity:.9;
 }
 
-/* ===== BOTÕES ===== */
-button{
-  padding:18px;
-  border-radius:20px;
+/* BOTÕES */
+button, a.btn{
+  width:100%;
+  padding:16px;
+  border-radius:18px;
   border:none;
   font-weight:800;
   font-size:1rem;
   cursor:pointer;
+  text-align:center;
+  text-decoration:none;
 }
 
 .primary{
@@ -97,7 +88,6 @@ button{
   color:#000;
 }
 
-/* ===== FOOTER ===== */
 .footer{
   text-align:center;
   font-size:.75rem;
@@ -121,6 +111,15 @@ button{
     <button class="primary" id="btnIniciar">
       ▶ Iniciar cálculo de corrida
     </button>
+
+    <!-- AÇÕES DE APOIO -->
+    <button class="outline" onclick="regrasMotorista()">
+      📋 Regras do motorista
+    </button>
+
+    <a href="instalar-app.html" class="btn outline">
+      📲 Instalar App
+    </a>
 
     <!-- SAIR -->
     <button class="outline" onclick="sair()">
@@ -156,6 +155,10 @@ document.getElementById("btnIniciar").onclick = () => {
   localStorage.removeItem("valorBase");
   window.location.href = "origem.html";
 };
+
+function regrasMotorista(){
+  window.location.href = "regras-motorista.html";
+}
 
 function sair(){
   localStorage.clear();
