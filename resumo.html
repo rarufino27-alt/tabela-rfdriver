@@ -299,7 +299,7 @@ function calcular(){
     const v =
       tipoViagem.value==="bate_volta"?valorBase*0.8:
       tipoViagem.value==="ida_volta"?valorBase:
-      valorBase*0.2;
+      valorBase*1.2;
     total+=v;
     detalhes.push(`Tipo de viagem: +R$ ${v.toFixed(2)}`);
   }
