@@ -8,73 +8,117 @@
 <link rel="stylesheet" href="./theme/theme.css">
 
 <style>
+/* ===== PALETA 5 ESTRELAS ===== */
+:root{
+  --wine-dark:#2B0F14;
+  --wine:#4A1A22;
+  --gold:#C9A24D;
+  --gold-soft:#E6C97A;
+  --bg:#f4f1f2;
+  --text:#2a2a2a;
+}
+
+/* ===== ANIMAÇÃO ===== */
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(18px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* ===== BASE ===== */
 body{
-  background:radial-gradient(circle at top,#ffffff,#f2f2f2);
+  margin:0;
+  background:
+    linear-gradient(
+      180deg,
+      #ffffff 0%,
+      #f4f1f2 55%,
+      #efe9eb 100%
+    );
   font-family:Inter, Arial, sans-serif;
-  color:#222;
+  color:var(--text);
 }
 
 .page{
   min-height:100vh;
   display:flex;
-  justify-content:center;
   align-items:center;
-  padding:20px;
+  justify-content:center;
+  padding:22px;
 }
 
+/* ===== CONTAINER ===== */
 .box{
   width:100%;
   max-width:420px;
-  background:#ffffff;
-  border-radius:28px;
-  padding:32px 24px;
-  box-shadow:0 16px 40px rgba(0,0,0,.12);
   display:flex;
   flex-direction:column;
   gap:22px;
+  animation:fadeUp .6s ease;
 }
 
-h1{
+/* ===== HERO ===== */
+.hero{
   text-align:center;
-  font-size:1.7rem;
+  padding:34px 26px;
+  border-radius:26px;
+  background:
+    linear-gradient(
+      135deg,
+      var(--wine-dark),
+      var(--wine)
+    );
+  box-shadow:0 14px 36px rgba(0,0,0,.22);
+  color:#fff;
+}
+
+.hero-title{
+  font-size:1.8rem;
   font-weight:900;
-  color:#000;
+  letter-spacing:2px;
 }
 
-.subtitle{
-  text-align:center;
-  font-size:.85rem;
-  color:#666;
+.hero-stars{
+  margin:10px 0 6px;
+  color:var(--gold);
+  letter-spacing:4px;
+  font-size:1rem;
 }
 
-/* BLOCOS */
+.hero-sub{
+  font-size:.9rem;
+  opacity:.9;
+  line-height:1.4;
+}
+
+/* ===== BLOCOS ===== */
 .group{
-  border-radius:18px;
-  padding:16px;
-  background:#f9f9f9;
+  border-radius:22px;
+  padding:18px;
+  background:#fff;
+  box-shadow:0 10px 26px rgba(0,0,0,.1);
   display:flex;
   flex-direction:column;
-  gap:10px;
+  gap:12px;
 }
 
 .group-title{
   font-weight:800;
   font-size:.9rem;
-  color:#000;
+  color:var(--wine);
 }
 
-/* BOTÕES */
+/* ===== BOTÕES ===== */
 .btn{
-  padding:15px;
-  border-radius:16px;
+  padding:16px;
+  border-radius:18px;
   border:none;
   font-size:.95rem;
   font-weight:800;
   cursor:pointer;
 }
 
-.btn-passageiro{
-  background:linear-gradient(180deg,#E6C97A,#D4AF37);
+.btn-primary{
+  background:linear-gradient(180deg,var(--gold-soft),var(--gold));
   color:#000;
 }
 
@@ -90,10 +134,11 @@ h1{
 }
 
 .btn-admin{
-  background:#e0e0e0;
+  background:#e5e5e5;
   color:#000;
 }
 
+/* ===== FOOTER ===== */
 .footer{
   text-align:center;
   font-size:.75rem;
@@ -107,16 +152,21 @@ h1{
 <div class="page">
   <div class="box">
 
-    <h1>Passageiro 5 Estrelas</h1>
-    <div class="subtitle">
-      Mobilidade premium com segurança e transparência
+    <!-- HERO -->
+    <div class="hero">
+      <div class="hero-title">PASSAGEIRO 5 ESTRELAS</div>
+      <div class="hero-stars">★★★★★</div>
+      <div class="hero-sub">
+        Mobilidade premium com segurança,<br>
+        respeito e transparência
+      </div>
     </div>
 
     <!-- PASSAGEIRO -->
     <div class="group">
       <div class="group-title">🚶 Passageiro</div>
 
-      <button class="btn btn-passageiro" onclick="passageiroCadastrado()">
+      <button class="btn btn-primary" onclick="passageiroCadastrado()">
         Já sou cadastrado
       </button>
 
@@ -151,8 +201,6 @@ h1{
 </div>
 
 <script>
-/* ================= AÇÕES ================= */
-
 function passageiroCadastrado(){
   window.location.href = "login-passageiro.html";
 }
