@@ -8,7 +8,6 @@
 <link rel="stylesheet" href="./theme/theme.css">
 
 <style>
-/* ===== PALETA 5 ESTRELAS ===== */
 :root{
   --wine-dark:#2B0F14;
   --wine:#4A1A22;
@@ -18,22 +17,14 @@
   --text:#2a2a2a;
 }
 
-/* ===== ANIMAÇÃO ===== */
 @keyframes fadeUp{
   from{opacity:0;transform:translateY(18px)}
   to{opacity:1;transform:translateY(0)}
 }
 
-/* ===== BASE ===== */
 body{
   margin:0;
-  background:
-    linear-gradient(
-      180deg,
-      #ffffff 0%,
-      #f4f1f2 55%,
-      #efe9eb 100%
-    );
+  background:linear-gradient(180deg,#ffffff 0%,#f4f1f2 55%,#efe9eb 100%);
   font-family:Inter, Arial, sans-serif;
   color:var(--text);
 }
@@ -46,7 +37,6 @@ body{
   padding:22px;
 }
 
-/* ===== CONTAINER ===== */
 .box{
   width:100%;
   max-width:420px;
@@ -56,17 +46,11 @@ body{
   animation:fadeUp .6s ease;
 }
 
-/* ===== HERO ===== */
 .hero{
   text-align:center;
   padding:34px 26px;
   border-radius:26px;
-  background:
-    linear-gradient(
-      135deg,
-      var(--wine-dark),
-      var(--wine)
-    );
+  background:linear-gradient(135deg,var(--wine-dark),var(--wine));
   box-shadow:0 14px 36px rgba(0,0,0,.22);
   color:#fff;
 }
@@ -81,7 +65,6 @@ body{
   margin:10px 0 6px;
   color:var(--gold);
   letter-spacing:4px;
-  font-size:1rem;
 }
 
 .hero-sub{
@@ -89,7 +72,6 @@ body{
   opacity:.9;
 }
 
-/* ===== CARD ===== */
 .card{
   background:#fff;
   padding:22px;
@@ -100,17 +82,14 @@ body{
   gap:16px;
 }
 
-/* ===== INPUT ===== */
 input{
   width:100%;
   padding:16px;
   border-radius:18px;
   border:1px solid #ccc;
   font-size:1rem;
-  color:#000;
 }
 
-/* ===== BOTÃO ===== */
 button{
   padding:16px;
   border-radius:18px;
@@ -118,11 +97,9 @@ button{
   background:linear-gradient(180deg,var(--gold-soft),var(--gold));
   font-size:1rem;
   font-weight:800;
-  color:#000;
   cursor:pointer;
 }
 
-/* ===== ERRO ===== */
 .error{
   color:#c62828;
   font-size:.8rem;
@@ -130,7 +107,6 @@ button{
   display:none;
 }
 
-/* ===== FOOTER ===== */
 .footer{
   text-align:center;
   font-size:.75rem;
@@ -144,18 +120,13 @@ button{
 <div class="page">
   <div class="box">
 
-    <!-- HERO -->
     <div class="hero">
       <div class="hero-title">PASSAGEIRO 5 ESTRELAS</div>
       <div class="hero-stars">★★★★★</div>
-      <div class="hero-sub">
-        Acesso com telefone cadastrado
-      </div>
+      <div class="hero-sub">Acesso com telefone cadastrado</div>
     </div>
 
-    <!-- FORM -->
     <div class="card">
-
       <input
         type="tel"
         id="telefone"
@@ -168,7 +139,6 @@ button{
       <div class="error" id="erro">
         Passageiro não encontrado ou bloqueado
       </div>
-
     </div>
 
     <div class="footer">
@@ -178,42 +148,32 @@ button{
   </div>
 </div>
 
-<!-- SUPABASE (ORDEM OBRIGATÓRIA) -->
+<!-- ORDEM OBRIGATÓRIA -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="./core/supabase.js"></script>
 
 <script>
 /* ================= AUTO REDIRECT ================= */
-
-try{
-  const usuario = typeof getUsuarioLogado === "function"
-    ? getUsuarioLogado()
-    : JSON.parse(localStorage.getItem("usuarioRF"));
-
-  if(usuario && usuario.tipo === "passageiro"){
-    window.location.href = "dashboard-passageiro.html";
-  }
-}catch(e){}
+const usuario = getUsuarioLogado();
+if(usuario && usuario.tipo === "passageiro"){
+  window.location.href = "dashboard-passageiro.html";
+}
 
 /* ================= ELEMENTOS ================= */
-
 const telefoneInput = document.getElementById("telefone");
 const erro = document.getElementById("erro");
 const btn = document.getElementById("btnEntrar");
 
 /* ================= MÁSCARA ================= */
-
-telefoneInput.addEventListener("input", () => {
+telefoneInput.addEventListener("input", ()=>{
   telefoneInput.value = telefoneInput.value.replace(/\D/g,"").slice(0,11);
 });
 
 /* ================= LOGIN ================= */
-
-btn.addEventListener("click", async () => {
+btn.onclick = async ()=>{
   erro.style.display = "none";
 
   const telefone = telefoneInput.value;
-
   if(telefone.length < 10){
     erro.innerText = "Telefone inválido";
     erro.style.display = "block";
@@ -234,14 +194,9 @@ btn.addEventListener("click", async () => {
     return;
   }
 
-  if(typeof setUsuarioLogado === "function"){
-    setUsuarioLogado(data);
-  }else{
-    localStorage.setItem("usuarioRF", JSON.stringify(data));
-  }
-
+  setUsuarioLogado(data);
   window.location.href = "dashboard-passageiro.html";
-});
+};
 </script>
 
 </body>
