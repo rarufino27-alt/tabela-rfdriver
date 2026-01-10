@@ -8,7 +8,6 @@
 <link rel="stylesheet" href="./theme/theme.css">
 
 <style>
-/* ===== PALETA 5 ESTRELAS ===== */
 :root{
   --wine-dark:#2B0F14;
   --wine:#4A1A22;
@@ -18,17 +17,10 @@
   --text:#2a2a2a;
 }
 
-/* ===== BASE ===== */
 body{
   margin:0;
   min-height:100vh;
-  background:
-    linear-gradient(
-      180deg,
-      #ffffff 0%,
-      #f4f1f2 60%,
-      #efe9eb 100%
-    );
+  background:linear-gradient(180deg,#ffffff 0%,#f4f1f2 60%,#efe9eb 100%);
   font-family:Inter, Arial, sans-serif;
   color:var(--text);
 }
@@ -48,17 +40,11 @@ body{
   gap:18px;
 }
 
-/* ===== HEADER ===== */
 .header{
   text-align:center;
   padding:22px;
   border-radius:24px;
-  background:
-    linear-gradient(
-      135deg,
-      var(--wine-dark),
-      var(--wine)
-    );
+  background:linear-gradient(135deg,var(--wine-dark),var(--wine));
   box-shadow:0 14px 36px rgba(0,0,0,.22);
   color:#fff;
 }
@@ -73,10 +59,8 @@ body{
   margin:8px 0 6px;
   color:var(--gold);
   letter-spacing:4px;
-  font-size:.95rem;
 }
 
-/* ===== BLOCOS ===== */
 .block{
   background:#fff;
   border-radius:20px;
@@ -106,14 +90,8 @@ body{
   margin-bottom:6px;
 }
 
-/* ===== TOTAL ===== */
 .totalBox{
-  background:
-    linear-gradient(
-      135deg,
-      var(--wine-dark),
-      var(--wine)
-    );
+  background:linear-gradient(135deg,var(--wine-dark),var(--wine));
   color:#fff;
   border-radius:22px;
   padding:18px;
@@ -132,7 +110,6 @@ body{
   color:var(--gold);
 }
 
-/* ===== INPUTS ===== */
 input, select{
   width:100%;
   padding:12px;
@@ -140,7 +117,6 @@ input, select{
   border:1px solid #ccc;
 }
 
-/* ===== BOTÕES ===== */
 .btn-main{
   padding:16px;
   border-radius:18px;
@@ -157,7 +133,6 @@ input, select{
   background:#fff;
 }
 
-/* ===== ASSINATURA ===== */
 .signature{
   background:#fff;
   border-radius:18px;
@@ -173,13 +148,11 @@ input, select{
 <div class="page">
 <div class="container">
 
-  <!-- HEADER -->
   <div class="header">
     <h1>RESUMO DA CORRIDA</h1>
     <div class="stars">★★★★★</div>
   </div>
 
-  <!-- ROTA -->
   <div class="block route">
     <strong>📍 Origem</strong><br>
     <span id="origemTxt"></span><br><br>
@@ -187,7 +160,6 @@ input, select{
     <span id="destinoTxt"></span>
   </div>
 
-  <!-- TIPO -->
   <div class="block">
     <label>🚖 Tipo de viagem</label>
     <select id="tipoViagem">
@@ -198,14 +170,12 @@ input, select{
     </select>
   </div>
 
-  <!-- TAXAS -->
   <div class="block">
     <div class="option"><span>🛣️ Desvio simples</span><input type="checkbox" id="desvioSimples"></div>
     <div class="option"><span>🏖️ Volta da praia</span><input type="checkbox" id="voltaPraia"></div>
     <div class="option"><span>🧺 Taxa de feira</span><input type="checkbox" id="taxaFeira"></div>
   </div>
 
-  <!-- ANIMAL -->
   <div class="block">
     <label>🐶 Transporte de animal</label>
     <select id="animal">
@@ -217,31 +187,26 @@ input, select{
     </select>
   </div>
 
-  <!-- ESPERA -->
   <div class="block">
     <label>⏱️ Tempo de espera (min)</label>
-    <input type="number" id="tempoEspera" placeholder="Ex: 8">
+    <input type="number" id="tempoEspera">
   </div>
 
-  <!-- EXTRA -->
   <div class="block">
     <label>➕ Desvio adicional</label>
-    <input type="number" id="desvioExtra" placeholder="Ex: 15.00">
+    <input type="number" id="desvioExtra">
   </div>
 
-  <!-- DETALHES -->
   <div class="block">
     <strong>Detalhamento</strong>
     <div class="details" id="detalhamento"></div>
   </div>
 
-  <!-- TOTAL -->
   <div class="totalBox">
     <div class="label">Valor total da corrida</div>
     <div class="total" id="total">R$ 0,00</div>
   </div>
 
-  <!-- ASSINATURA -->
   <div class="signature" id="assinatura"></div>
 
   <button id="btnWhats" class="btn-main">Enviar no WhatsApp</button>
@@ -250,16 +215,15 @@ input, select{
 </div>
 </div>
 
-<script src="core/motoristas.js"></script>
 <script src="core/global.js"></script>
 <script src="core/taxas.js"></script>
 <script src="core/dinamico.js"></script>
 
 <script>
-const usuario = JSON.parse(localStorage.getItem("usuarioRF"));
+const usuario = getUsuarioLogado();
 const origem = App.get("origem");
 const destino = App.get("destino");
-const valorBase = Number(App.get("valorBase")||0);
+const valorBase = Number(App.get("valorBase") || 0);
 
 origemTxt.innerText = origem;
 destinoTxt.innerText = destino;
@@ -267,18 +231,26 @@ destinoTxt.innerText = destino;
 const assinatura = document.getElementById("assinatura");
 const btnWhats = document.getElementById("btnWhats");
 
-if(usuario.tipo==="motorista"){
-  assinatura.innerHTML=
-    `<strong>MOTORISTA</strong><br>${usuario.nome}<br>
-     Veículo: ${usuario.modelo}<br>
-     Placa: ${usuario.placa}`;
+/* ===== ASSINATURA ===== */
+if(usuario.tipo === "motorista"){
+  assinatura.innerHTML = `
+    <strong>MOTORISTA</strong><br>
+    ${usuario.nome}<br>
+    Veículo: ${usuario.modelo}<br>
+    Placa: ${usuario.placa}
+  `;
+}else if(usuario.tipo === "admin"){
+  assinatura.innerHTML = `
+    <strong>ADMINISTRADOR</strong><br>
+    ${usuario.nome}
+  `;
 }else{
-  assinatura.style.display="none";
-  btnWhats.style.display="none";
+  assinatura.style.display = "none";
+  btnWhats.style.display = "none";
 }
 
-/* ===== ELEMENTOS ===== */
-const tipoViagem = document.getElementById("tipoViagem");
+/* ===== CÁLCULO ===== */
+const tipoViagem = tipoViagem = document.getElementById("tipoViagem");
 const desvioSimples = document.getElementById("desvioSimples");
 const voltaPraia = document.getElementById("voltaPraia");
 const taxaFeira = document.getElementById("taxaFeira");
@@ -286,21 +258,16 @@ const animalSel = document.getElementById("animal");
 const tempoEsperaInput = document.getElementById("tempoEspera");
 const desvioExtraInput = document.getElementById("desvioExtra");
 
-const detalhamento = document.getElementById("detalhamento");
-const totalDiv = document.getElementById("total");
-
 function calcular(){
   let total = valorBase;
-  let detalhes = [];
+  let detalhes = [`Base: R$ ${valorBase.toFixed(2)}`];
 
-  detalhes.push(`Base: R$ ${valorBase.toFixed(2)}`);
-
-  if(tipoViagem.value!=="ida"){
+  if(tipoViagem.value !== "ida"){
     const v =
-      tipoViagem.value==="bate_volta"?valorBase*0.8:
-      tipoViagem.value==="ida_volta"?valorBase:
-      valorBase*1.2;
-    total+=v;
+      tipoViagem.value === "bate_volta" ? valorBase * 0.8 :
+      tipoViagem.value === "ida_volta" ? valorBase :
+      valorBase * 1.2;
+    total += v;
     detalhes.push(`Tipo de viagem: +R$ ${v.toFixed(2)}`);
   }
 
@@ -322,13 +289,36 @@ function calcular(){
   if(extra){ total+=extra; detalhes.push(`Extra: +R$ ${extra.toFixed(2)}`); }
 
   detalhamento.innerHTML = detalhes.map(d=>`<div>${d}</div>`).join("");
-  totalDiv.innerText = `R$ ${total.toFixed(2)}`;
+  total.innerText = `R$ ${total.toFixed(2)}`;
   App.set("total", total);
   window.__whatsDetalhes = detalhes;
 }
 
 document.querySelectorAll("input,select").forEach(e=>e.addEventListener("change",calcular));
 calcular();
+
+/* ===== WHATSAPP ===== */
+btnWhats.onclick = ()=>{
+  const total = App.get("total");
+  const assinaturaTxt =
+    usuario.tipo === "motorista"
+      ? `*MOTORISTA* ${usuario.nome}\nVeículo: ${usuario.modelo}\nPlaca: ${usuario.placa}`
+      : `*ADMINISTRADOR* ${usuario.nome}`;
+
+  const msg =
+`*🚖 5 Estrelas – Resumo da Corrida*
+
+Origem: ${origem}
+Destino: ${destino}
+
+${window.__whatsDetalhes.join("\n")}
+
+*Total:* R$ ${total.toFixed(2)}
+
+${assinaturaTxt}`;
+
+  window.open("https://wa.me/?text="+encodeURIComponent(msg),"_blank");
+};
 </script>
 
 </body>
