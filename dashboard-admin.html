@@ -2,60 +2,121 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Dashboard Admin – Passageiro 5 Estrelas</title>
+<title>Dashboard Admin – 5 Estrelas</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link rel="stylesheet" href="./theme/theme.css">
 
 <style>
-body{
-  background:linear-gradient(180deg,#ffffff,#f3f3f3);
-  font-family:Inter, Arial, sans-serif;
+/* ===== PALETA 5 ESTRELAS ===== */
+:root{
+  --wine-dark:#2B0F14;
+  --wine:#4A1A22;
+  --gold:#D4AF37;
+  --gold-soft:#E6C97A;
+  --bg:#f4f1f2;
+  --text:#333;
 }
+
+/* ===== LAYOUT ===== */
+body{
+  min-height:100vh;
+  background:
+    linear-gradient(
+      180deg,
+      #ffffff 0%,
+      #f4f1f2 60%,
+      #efe9ec 100%
+    );
+  font-family:Inter, Arial, sans-serif;
+  color:var(--text);
+}
+
 .page{
   min-height:100vh;
   display:flex;
   justify-content:center;
   align-items:center;
-  padding:20px;
+  padding:22px;
 }
+
 .box{
   width:100%;
   max-width:420px;
   background:#fff;
-  border-radius:26px;
-  padding:30px 24px;
-  box-shadow:0 14px 36px rgba(0,0,0,.12);
+  border-radius:28px;
+  padding:32px 26px;
+  box-shadow:0 16px 40px rgba(0,0,0,.14);
   display:flex;
   flex-direction:column;
-  gap:16px;
+  gap:18px;
 }
-h1{
+
+/* ===== HERO ===== */
+.hero{
   text-align:center;
-  font-size:1.6rem;
+  padding:28px 20px;
+  border-radius:24px;
+  background:
+    linear-gradient(
+      135deg,
+      var(--wine-dark),
+      var(--wine)
+    );
+  box-shadow:0 12px 30px rgba(0,0,0,.2);
+  color:#fff;
 }
-button{
+
+.hero h1{
+  font-size:1.6rem;
+  font-weight:900;
+  letter-spacing:2px;
+}
+
+.hero span{
+  font-size:.85rem;
+  opacity:.9;
+  display:block;
+  margin-top:6px;
+}
+
+/* ===== BOTÕES ===== */
+button, a.btn{
+  width:100%;
   padding:16px;
   border-radius:18px;
   border:none;
   font-weight:800;
+  font-size:1rem;
   cursor:pointer;
+  text-align:center;
+  text-decoration:none;
 }
-.primary{
+
+/* Primários */
+.btn-admin{
   background:#111;
   color:#fff;
 }
-.gold{
-  background:#d4af37;
+
+.btn-gold{
+  background:linear-gradient(180deg,var(--gold-soft),var(--gold));
+  color:#000;
 }
-.outline{
+
+/* Secundários */
+.btn-outline{
   background:#fff;
   border:1px solid #ccc;
+  color:#000;
 }
+
+/* Footer */
 .footer{
   text-align:center;
   font-size:.75rem;
   color:#777;
+  margin-top:6px;
 }
 </style>
 </head>
@@ -65,41 +126,48 @@ button{
 <div class="page">
   <div class="box">
 
-    <h1>ADMINISTRADOR 5 ESTRELAS</h1>
-    <p id="nome"></p>
+    <!-- HERO -->
+    <div class="hero">
+      <h1>ADMINISTRADOR</h1>
+      <span id="nomeAdmin"></span>
+    </div>
 
-    <button class="primary" onclick="abrirPainel()">
+    <!-- AÇÕES PRINCIPAIS -->
+    <button class="btn-admin" onclick="abrirPainel()">
       🛠️ Painel Administrativo
     </button>
 
-    <button class="gold" onclick="iniciarCalculo()">
-      ▶ Iniciar cálculo
+    <button class="btn-gold" onclick="iniciarCalculo()">
+      ▶ Iniciar cálculo de corrida
     </button>
 
-    <button class="outline" onclick="regrasMotorista()">
+    <!-- AÇÕES DE APOIO -->
+    <button class="btn-outline" onclick="regrasMotorista()">
       📋 Regras do motorista
     </button>
 
-    <button class="outline" onclick="regrasPassageiro()">
+    <button class="btn-outline" onclick="regrasPassageiro()">
       📋 Regras do passageiro
     </button>
 
-    <a class="outline btn" href="instalar-app.html">
+    <a class="btn btn-outline" href="instalar-app.html">
       📲 Instalar App
     </a>
 
-    <button class="outline" onclick="sair()">
+    <button class="btn-outline" onclick="sair()">
       🔒 Sair
     </button>
 
     <div class="footer">
-      5 ESTRELAS • Controle administrativo
+      Grupo 5 Estrelas • Controle administrativo
     </div>
 
   </div>
 </div>
 
 <script>
+/* ================= PROTEÇÃO DE SESSÃO ================= */
+
 const usuario = JSON.parse(localStorage.getItem("usuarioRF"));
 
 if(!usuario || usuario.tipo !== "admin"){
@@ -107,20 +175,29 @@ if(!usuario || usuario.tipo !== "admin"){
   window.location.href = "index.html";
 }
 
-document.getElementById("nome").innerText = usuario.nome;
+document.getElementById("nomeAdmin").innerText = usuario.nome;
+
+/* ================= AÇÕES ================= */
 
 function abrirPainel(){
   window.location.href = "admin-painel.html";
 }
+
 function iniciarCalculo(){
+  localStorage.removeItem("origem");
+  localStorage.removeItem("destino");
+  localStorage.removeItem("valorBase");
   window.location.href = "origem.html";
 }
+
 function regrasMotorista(){
   window.location.href = "regras-motorista.html";
 }
+
 function regrasPassageiro(){
   window.location.href = "regras-passageiro.html";
 }
+
 function sair(){
   localStorage.clear();
   window.location.href = "index.html";
