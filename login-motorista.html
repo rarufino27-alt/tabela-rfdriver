@@ -8,7 +8,6 @@
 <link rel="stylesheet" href="./theme/theme.css">
 
 <style>
-/* ===== PALETA 5 ESTRELAS ===== */
 :root{
   --wine-dark:#2B0F14;
   --wine:#4A1A22;
@@ -18,16 +17,9 @@
   --text:#333;
 }
 
-/* ===== LAYOUT ===== */
 body{
   min-height:100vh;
-  background:
-    linear-gradient(
-      180deg,
-      #ffffff 0%,
-      #f4f1f2 60%,
-      #efe9ec 100%
-    );
+  background:linear-gradient(180deg,#ffffff 0%,#f4f1f2 60%,#efe9ec 100%);
   font-family:Inter, Arial, sans-serif;
   color:var(--text);
 }
@@ -52,10 +44,7 @@ body{
   gap:20px;
 }
 
-/* ===== LOGO ===== */
-.logo{
-  text-align:center;
-}
+.logo{text-align:center;}
 
 .logo h1{
   font-size:1.5rem;
@@ -71,17 +60,14 @@ body{
   color:#666;
 }
 
-/* ===== INPUT ===== */
 input{
   width:100%;
   padding:14px;
   border-radius:16px;
   border:1px solid #ccc;
   font-size:1rem;
-  color:#000;
 }
 
-/* ===== BOTÃO ===== */
 button{
   padding:16px;
   border-radius:18px;
@@ -89,15 +75,12 @@ button{
   background:linear-gradient(180deg,var(--gold-soft),var(--gold));
   font-weight:800;
   font-size:1rem;
-  color:#000;
   cursor:pointer;
+  color:#000;
 }
 
-button:active{
-  transform:scale(.98);
-}
+button:active{transform:scale(.98);}
 
-/* ===== ERRO ===== */
 .error{
   color:#b00020;
   font-size:.8rem;
@@ -126,46 +109,29 @@ button:active{
 
     <button id="btnEntrar">Entrar</button>
 
-    <div class="error" id="erro">
-      Motorista não autorizado
-    </div>
+    <div class="error" id="erro">Motorista não autorizado</div>
 
   </div>
 </div>
 
-<!-- ===== SUPABASE ===== -->
+<!-- ORDEM CORRETA -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-/* ===== CONFIGURAÇÃO FIXA ===== */
-
-const SUPABASE_URL = "https://msnqiiwcityikslikbow.supabase.co";
-const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1zbnFpaXdjaXR5aWtzbGlrYm93Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc3MDM5OTgsImV4cCI6MjA4MzI3OTk5OH0.0KyaSuL5At4_Cfa4TOM7kvvkVYv-gmR2sb7vX6VHkaU";
-
-const GRUPO_ID = "f5b2eec4-f957-4648-8e4e-f5642159dd8c";
-
-const supabaseClient = supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_ANON_KEY
-);
-</script>
+<script src="./core/supabase.js"></script>
 
 <script>
-/* ===== AUTO-REDIRECT ===== */
-
-const usuarioLogado = JSON.parse(localStorage.getItem("usuarioRF"));
+/* ================= AUTO REDIRECT ================= */
+const usuarioLogado = getUsuarioLogado();
 if(usuarioLogado && usuarioLogado.tipo === "motorista"){
   window.location.href = "dashboard-motorista.html";
 }
 
-/* ===== ELEMENTOS ===== */
-
+/* ================= ELEMENTOS ================= */
 const cpfInput = document.getElementById("cpf");
 const btn = document.getElementById("btnEntrar");
 const erro = document.getElementById("erro");
 
-/* ===== MÁSCARA CPF ===== */
-
-cpfInput.addEventListener("input", () => {
+/* ================= MÁSCARA CPF ================= */
+cpfInput.addEventListener("input", ()=>{
   let v = cpfInput.value.replace(/\D/g,"").slice(0,11);
   v = v.replace(/(\d{3})(\d)/,"$1.$2");
   v = v.replace(/(\d{3})(\d)/,"$1.$2");
@@ -173,18 +139,11 @@ cpfInput.addEventListener("input", () => {
   cpfInput.value = v;
 });
 
-/* ===== LOGIN ===== */
-
-btn.addEventListener("click", loginMotorista);
-cpfInput.addEventListener("keypress", e=>{
-  if(e.key === "Enter") loginMotorista();
-});
-
-async function loginMotorista(){
+/* ================= LOGIN ================= */
+btn.onclick = async ()=>{
   erro.style.display = "none";
 
   const cpf = cpfInput.value.replace(/\D/g,"");
-
   if(cpf.length !== 11){
     erro.innerText = "CPF inválido";
     erro.style.display = "block";
@@ -197,7 +156,7 @@ async function loginMotorista(){
     .eq("cpf", cpf)
     .eq("tipo", "motorista")
     .eq("ativo", true)
-    .eq("grupo_id", GRUPO_ID)
+    .eq("grupo_id", getGrupoId())
     .single();
 
   if(error || !data){
@@ -205,7 +164,7 @@ async function loginMotorista(){
     return;
   }
 
-  localStorage.setItem("usuarioRF", JSON.stringify({
+  setUsuarioLogado({
     id: data.id,
     tipo: "motorista",
     nome: data.nome,
@@ -214,10 +173,10 @@ async function loginMotorista(){
     modelo: data.modelo_carro,
     grupo_id: data.grupo_id,
     ativo: true
-  }));
+  });
 
   window.location.href = "dashboard-motorista.html";
-}
+};
 </script>
 
 </body>
