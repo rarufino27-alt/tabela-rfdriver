@@ -27,13 +27,12 @@
 /* ===== BASE ===== */
 body{
   margin:0;
-  background:
-    linear-gradient(
-      180deg,
-      #ffffff 0%,
-      #f4f1f2 55%,
-      #efe9eb 100%
-    );
+  background:linear-gradient(
+    180deg,
+    #ffffff 0%,
+    #f4f1f2 55%,
+    #efe9eb 100%
+  );
   font-family:Inter, Arial, sans-serif;
   color:var(--text);
 }
@@ -61,12 +60,7 @@ body{
   text-align:center;
   padding:34px 26px;
   border-radius:26px;
-  background:
-    linear-gradient(
-      135deg,
-      var(--wine-dark),
-      var(--wine)
-    );
+  background:linear-gradient(135deg,var(--wine-dark),var(--wine));
   box-shadow:0 14px 36px rgba(0,0,0,.22);
   color:#fff;
 }
@@ -131,6 +125,8 @@ body{
   font-weight:800;
   cursor:pointer;
   color:#000;
+  text-align:center;
+  text-decoration:none;
 }
 
 /* ===== FOOTER ===== */
@@ -172,7 +168,7 @@ body{
 
     <!-- AÇÕES SECUNDÁRIAS -->
     <div class="actions">
-      <button class="btn-outline" onclick="abrirRegras()">
+      <button class="btn-outline" id="btnRegras">
         📋 Regras do passageiro
       </button>
       <a class="btn-outline" href="instalar-app.html">
@@ -188,40 +184,26 @@ body{
   </div>
 </div>
 
+<!-- ================= ORDEM OBRIGATÓRIA ================= -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="./core/supabase.js"></script>
+<script src="./core/global.js"></script>
+
 <script>
-/* ================= PROTEÇÃO DE SESSÃO (FINAL) ================= */
-
-function getUsuarioSeguro(){
-  try{
-    return JSON.parse(localStorage.getItem("usuarioRF"));
-  }catch(e){
-    return null;
-  }
-}
-
-const usuario = getUsuarioSeguro();
-
-if(
-  !usuario ||
-  usuario.tipo !== "passageiro" ||
-  usuario.ativo !== true
-){
-  localStorage.clear();
-  window.location.href = "login-passageiro.html";
-}
+/* ================= PROTEÇÃO DE SESSÃO ================= */
+(async () => {
+  await App.requireAuth(["passageiro"]);
+})();
 
 /* ================= AÇÕES ================= */
-
 document.getElementById("btnIniciar").onclick = () => {
-  localStorage.removeItem("origem");
-  localStorage.removeItem("destino");
-  localStorage.removeItem("valorBase");
-  window.location.href = "origem.html";
+  App.resetState();
+  App.go("origem.html");
 };
 
-function abrirRegras(){
-  window.location.href = "regras-passageiro.html";
-}
+document.getElementById("btnRegras").onclick = () => {
+  App.go("regras-passageiro.html");
+};
 </script>
 
 </body>
